@@ -1,0 +1,100 @@
+% Saved by Prover9-Mace4 Version 0.5, December 2007.
+
+set(ignore_option_dependencies). % GUI handles dependencies
+
+% Language Options
+
+redeclare(universal_quantification, forall).
+redeclare(negation, "--").
+redeclare(equality, "===").
+
+if(Prover9). % Options for Prover9
+  assign(max_seconds, 60).
+end_if.
+
+if(Mace4).   % Options for Mace4
+  assign(max_seconds, 30).
+end_if.
+
+if(Prover9). % Additional input for Prover9
+% ExampleRules in folder ARC
+% ExampleRules.hs
+
+% Noun complement   -a
+% Noun intersection a ^ b
+% Noun union        a U b
+% 
+
+%assign(max_seconds, 30).
+end_if.
+
+formulas(assumptions).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rules for Syllogistic Logic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+all(x,x)                            		# label(AXIOM).
+all(x, y) & all(y, z) -> all(x, z)  		# label(BARBARA).
+some(x, y) -> some(x, x)			# label(SOME).
+some(x, y) -> some(y, x)            		# label(CONVERSION).
+some(x, y) & all(y, z) -> some(x, z)		# label(DARII).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rules for Sizes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+all(x, y) & atleast(x, y) 	-> all(y, x) 		# label(CARDMIX).
+all(x, y) 			-> atleast(y, x) 	# label(SUBSETSIZE).
+atleast(x, y) & atleast(y, z) 	-> atleast(x, z) 	# label(CARDTRANS).
+some(x, x) & atleast(y, x) 	-> some(y, y) 		# label(CARDEX).
+more(x, y) 			-> atleast(x, y) 	# label(MOREATLEAST).
+more(x, y) & atleast(y, z) 	-> more(x, z) 		# label(MORELEFT).
+atleast(x, y) & more(y, z) 	-> more(x, z) 		# label(MORERIGHT).
+atleast(x, y) & more(y, z) 	-> phi 			# label(EXPLOSION).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% All with Union
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+all(x + x, x)		# label(UNIONIDEMP).
+all(x, x + y)		# label(UNIONEXTEND).
+all(x + y, y + x)		# label(UNIONSYMM).
+all(x, z) & all(y, z) -> all(x + y, z)	# label(UNIONALL).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some with Union
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+some(x, y)	-> some(x + z, y)	# label(SOMEEXTEND).
+more(x, y) & atleast(w, z) & atleast(y + z, x + w) -> some(x, w) # label(MORNINGRULE).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Laws of Boolean Algebra
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% First, a "convenience" law that allows us to replace equality with "all" subset.
+x = y               -> all(x, y)        # label(Convenience).
+x = y               -> all(y, x)        # label(Convenience).
+all(x, y) & all(y, x)       -> x = y        # label(Convenience).
+
+%%% Next, the laws in terms of equality:
+x + (y + z) = (x + y) + z.
+x ^ (y ^ z) = (x ^ y) ^ z.
+x + y = y + x.
+x ^ y = y ^ x.
+x ^ (y + z) = (x ^ y) + (x ^ z).
+x + (y ^ z) = (x + y) ^ (x + z).
+x + (x ^ -x) = x.
+x ^ (x + -x) = x.
+x ^ (x ^ -x) = (x ^ -x).
+x + (x + -x) = (x + -x).
+x + x = x.
+x ^ x = x.
+x ^ (x + y) = x.
+x + (x ^ y) = x.
+
+end_of_list.
+
+formulas(goals).
+
+% Sanity check
+%atleast(x, x).
+
+end_of_list.
+

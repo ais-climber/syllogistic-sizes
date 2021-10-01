@@ -1,0 +1,661 @@
+\documentclass[12pt]{article}
+\usepackage{amssymb,amsthm,amsmath}
+\usepackage{lscape}
+
+\usepackage{bigstrut}
+%\usepackage{MnSymbol}
+\usepackage{bbm}
+\usepackage{proof}
+\usepackage{bussproofs}
+\usepackage{tikz}
+\usepackage{lingmacros}
+
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+
+\newcommand{\existsgeq}{\mbox{\sf AtLeast}}
+\newcommand{\Pol}{\mbox{\emph{Pol}}}
+  \newcommand{\nonered}{\textcolor{red}{=}}
+  \newcommand{\equalsred}{\nonered}
+  \newcommand{\redstar}{\textcolor{red}{\star}}
+    \newcommand{\dred}{\textcolor{red}{d}}
+    \newcommand{\dmark}{\dred}
+    \newcommand{\redflip}{\textcolor{red}{flip}}
+        \newcommand{\flipdred}{\textcolor{red}{\mbox{\scriptsize \em flip}\ d}}
+        \newcommand{\mdred}{\textcolor{blue}{m}\textcolor{red}{d}}
+        \newcommand{\ndred}{\textcolor{blue}{n}\textcolor{red}{d}}
+\newcommand{\arrowm}{\overset{\textcolor{blue}{m}}{\rightarrow} }
+\newcommand{\arrown}{\overset{\textcolor{blue}{n}}{\rightarrow} }
+\newcommand{\arrowmn}{\overset{\textcolor{blue}{mn}}{\longrightarrow} }
+\newcommand{\arrowmonemtwo}{\overset{\textcolor{blue}{m_1 m_2}}{\longrightarrow} }
+\newcommand{\bluen}{\textcolor{blue}{n}}
+\newcommand{\bluem}{\textcolor{blue}{m}}
+\newcommand{\bluemone}{\textcolor{blue}{m_1}}
+\newcommand{\bluemtwo}{\textcolor{blue}{m_2}}
+\newcommand{\blueminus}{\textcolor{blue}{-}}
+
+\newcommand{\bluedot}{\textcolor{blue}{\cdot}}
+\newcommand{\bluepm}{\textcolor{blue}{\pm}}
+\newcommand{\blueplus}{\textcolor{blue}{+ }}
+\newcommand{\translate}[1]{{#1}^{tr}}
+\newcommand{\Caba}{\mbox{\sf Caba}} 
+\newcommand{\Set}{\mbox{\sf Set}} 
+\newcommand{\Pre}{\mbox{\sf Pre}} 
+\newcommand{\wmarkpolarity}{\scriptsize{\mbox{\sf W}}}
+\newcommand{\wmarkmarking}{\scriptsize{\mbox{\sf Mon}}}
+\newcommand{\smark}{\scriptsize{\mbox{\sf S}}}
+\newcommand{\bmark}{\scriptsize{\mbox{\sf B}}}
+\newcommand{\mmark}{\scriptsize{\mbox{\sf M}}}
+\newcommand{\jmark}{\scriptsize{\mbox{\sf J}}}
+\newcommand{\kmark}{\scriptsize{\mbox{\sf K}}}
+\newcommand{\tmark}{\scriptsize{\mbox{\sf T}}}
+\newcommand{\greatermark}{\mbox{\tiny $>$}}
+\newcommand{\lessermark}{\mbox{\tiny $<$}}
+%%{\mbox{\ensuremath{>}}}
+\newcommand{\true}{\top}
+\newcommand{\false}{\bot}
+\newcommand{\upred}{\textcolor{red}{\uparrow}}
+\newcommand{\downred}{\textcolor{red}{\downarrow}}
+\usepackage[all,cmtip]{xy}
+\usepackage{enumitem}
+\usepackage{fullpage}
+\usepackage[authoryear]{natbib}
+\usepackage{multicol}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{claim}{Claim}
+\newtheorem{corollary}{Corollary}
+%\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\semantics}[1]{[\![\mbox{\em $ #1 $\/}]\!]}
+\newcommand{\abovearrow}[1]{\rightarrow\hspace{-.14in}\raiseonebox{1.0ex}
+{$\scriptscriptstyle{#1}$}\hspace{.13in}}
+\newcommand{\toplus}{\abovearrow{r}}
+\newcommand{\tominus}{\abovearrow{i}} 
+\newcommand{\todestroy}{\abovearrow{d}}
+\newcommand{\tom}{\abovearrow{m}}
+\newcommand{\tomprime}{\abovearrow{m'}}
+\newcommand{\A}{\textsf{App}}
+\newcommand{\At}{\textsf{At}}
+\newcommand{\Emb}{\textsf{Emb}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\DD}{\mathbb{D}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\LL}{\mathbb{L}}
+\newcommand{\MM}{\mathbb{M}}
+\usepackage{verbatim}
+\newcommand{\TT}{\mathcal{T}}
+\newcommand{\Marking}{\mbox{Mar}}
+\newcommand{\Markings}{\Marking}
+\newcommand{\Mar}{\Marking}
+\newcommand{\Model}{\mathcal{M}}
+\renewcommand{\SS}{\mathcal{S}}
+\newcommand{\TTM}{\TT_{\Markings}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\erase}{\mbox{\textsf{erase}}}
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\arrowplus}{\overset{\blueplus}{\rightarrow} }
+\newcommand{\arrowminus}{\overset{\blueminus}{\rightarrow} }
+\newcommand{\arrowdot}{\overset{\bluedot}{\rightarrow} }
+\newcommand{\arrowboth}{\overset{\bluepm}{\rightarrow} }
+\newcommand{\arrowpm}{\arrowboth}
+\newcommand{\arrowplusminus}{\arrowboth}
+\newcommand{\arrowmone}{\overset{m_1}{\rightarrow} }
+\newcommand{\arrowmtwo}{\overset{m_2}{\rightarrow} }
+\newcommand{\arrowmthree}{\overset{m_3}{\rightarrow} }
+\newcommand{\arrowmcomplex}{\overset{m_1 \orr m_2}{\longrightarrow} }
+\newcommand{\arrowmproduct}{\overset{m_1 \cdot m_2}{\longrightarrow} }
+\newcommand{\proves}{\vdash}
+\newcommand{\Dual}{\mbox{\sc dual}}
+\newcommand{\orr}{\vee}
+\newcommand{\uar}{\uparrow}
+\newcommand{\dar}{\downarrow}
+\newcommand{\andd}{\wedge}
+\newcommand{\bigandd}{\bigwedge}
+\newcommand{\arrowmprime}{\overset{m'}{\rightarrow} }
+\newcommand{\quadiff}{\quad \mbox{ iff } \quad}
+\newcommand{\Con}{\mbox{\sf Con}}
+\newcommand{\type}{\mbox{\sf type}}
+\newcommand{\lang}{\mathcal{L}}
+\newcommand{\necc}{\Box}
+\newcommand{\vocab}{\mathcal{V}}
+\newcommand{\wocab}{\mathcal{W}}
+\newcommand{\Types}{\mathcal{T}_\mathcal{M}}
+\newcommand{\mon}{\mbox{\sf mon}}
+\newcommand{\anti}{\mbox{\sf anti}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\rem}[1]{\relax}
+
+
+\newcommand{\raiseone}{\mbox{raise}^1}
+\newcommand{\raisetwo}{\mbox{raise}^2}
+\newcommand{\wrapper}[1]{{#1}}
+\newcommand{\sfa}{\wrapper{\mbox{\sf a}}}
+\newcommand{\sfb}{\wrapper{\mbox{\sf b}}}
+\newcommand{\sfv}{\wrapper{\mbox{\sf v}}}
+\newcommand{\sfw}{\wrapper{\mbox{\sf w}}}
+\newcommand{\sfx}{\wrapper{\mbox{\sf x}}}
+\newcommand{\sfy}{\wrapper{\mbox{\sf y}}}
+\newcommand{\sfz}{\wrapper{\mbox{\sf z}}}
+  \newcommand{\sff}{\wrapper{\mbox{\sf f}}}
+    \newcommand{\sft}{\wrapper{\mbox{\sf t}}}
+      \newcommand{\sfc}{\wrapper{\mbox{\sf c}}}
+      \newcommand{\sfu}{\wrapper{\mbox{\sf u}}}
+            \newcommand{\sfs}{\wrapper{\mbox{\sf s}}}
+  \newcommand{\sfg}{\wrapper{\mbox{\sf g}}}
+
+\newcommand{\sfvomits}{\wrapper{\mbox{\sf vomits}}}
+\newlength{\mathfrwidth}
+  \setlength{\mathfrwidth}{\textwidth}
+  \addtolength{\mathfrwidth}{-2\fboxrule}
+  \addtolength{\mathfrwidth}{-2\fboxsep}
+\newsavebox{\mathfrbox}
+\newenvironment{mathframe}
+    {\begin{lrbox}{\mathfrbox}\begin{minipage}{\mathfrwidth}\begin{center}}
+    {\end{center}\end{minipage}\end{lrbox}\noindent\fbox{\usebox{\mathfrbox}}}
+    \newenvironment{mathframenocenter}
+    {\begin{lrbox}{\mathfrbox}\begin{minipage}{\mathfrwidth}}
+    {\end{minipage}\end{lrbox}\noindent\fbox{\usebox{\mathfrbox}}} 
+ \renewcommand{\hat}{\widehat}
+ \newcommand{\nott}{\neg}
+  \newcommand{\preorderO}{\mathbb{O}}
+ \newcommand{\PreorderP}{\mathbb{P}}
+  \newcommand{\preorderE}{\mathbb{E}}
+\newcommand{\preorderP}{\mathbb{P}}
+\newcommand{\preorderN}{\mathbb{N}}
+\newcommand{\preorderQ}{\mathbb{Q}}
+\newcommand{\preorderX}{\mathbb{X}}
+\newcommand{\preorderA}{\mathbb{A}}
+\newcommand{\preorderR}{\mathbb{R}}
+\newcommand{\preorderOm}{\mathbb{O}^{\bluem}}
+\newcommand{\preorderPm}{\mathbb{P}^{\bluem}}
+\newcommand{\preorderQm}{\mathbb{Q}^{\bluem}}
+\newcommand{\preorderOn}{\mathbb{O}^{\bluen}}
+\newcommand{\preorderPn}{\mathbb{P}^{\bluen}}
+\newcommand{\preorderQn}{\mathbb{Q}^{\bluen}}
+ \newcommand{\PreorderPop}{\mathbb{P}^{\blueminus}}
+  \newcommand{\preorderEop}{\mathbb{E}^{\blueminus}}
+\newcommand{\preorderPop}{\mathbb{P}^{\blueminus}}
+\newcommand{\preorderNop}{\mathbb{N}^{\blueminus}}
+\newcommand{\preorderQop}{\mathbb{Q}^{\blueminus}}
+\newcommand{\preorderXop}{\mathbb{X}^{\blueminus}}
+\newcommand{\preorderAop}{\mathbb{A}^{\blueminus}}
+\newcommand{\preorderRop}{\mathbb{R}^{\blueminus}}
+ \newcommand{\PreorderPflat}{\mathbb{P}^{\flat}}
+  \newcommand{\preorderEflat}{\mathbb{E}^{\flat}}
+\newcommand{\preorderPflat}{\mathbb{P}^{\flat}}
+\newcommand{\preorderNflat}{\mathbb{N}^{\flat}}
+\newcommand{\preorderQflat}{\mathbb{Q}^{\flat}}
+\newcommand{\preorderXflat}{\mathbb{X}^{\flat}}
+\newcommand{\preorderAflat}{\mathbb{A}^{\flat}}
+\newcommand{\preorderRflat}{\mathbb{R}^{\flat}}
+\newcommand{\pstar}{\preorderBool^{\preorderBool^{E}}}
+\newcommand{\pstarplus}{(\pstar)^{\blueplus}}
+\newcommand{\pstarminus}{(\pstar)^{\blueminus}}
+\newcommand{\pstarm}{(\pstar)^{\bluem}}
+\newcommand{\Reals}{\preorderR}
+\newcommand{\preorderS}{\mathbb{S}}
+\newcommand{\preorderBool}{\mathbbm{2}}
+ \renewcommand{\o}{\cdot}
+ \newcommand{\NP}{\mbox{\sc np}}
+ \newcommand{\NPplus}{\NP^{\blueplus}}
+  \newcommand{\NPminus}{\NP^{\blueminus}}
+   \newcommand{\NPplain}{\NP}
+    \newcommand{\npplus}{np^{\blueplus}}
+  \newcommand{\npminus}{np^{\blueminus}}
+   \newcommand{\npplain}{np}
+   \newcommand{\np}{np}
+   \newcommand{\Term}{\mbox{\sc t}}
+  \newcommand{\N}{\mbox{\sc n}}
+   \newcommand{\X}{\mbox{\sc x}}
+      \newcommand{\Y}{\mbox{\sc y}}
+            \newcommand{\V}{\mbox{\sc v}}
+    \newcommand{\Nbar}{\overline{\mbox{\sc n}}}
+    \newcommand{\Pow}{\mathcal{P}}
+    \newcommand{\powcontravariant}{\mathcal{Q}}
+    \newcommand{\Id}{\mbox{Id}}
+    \newcommand{\pow}{\Pow}
+   \newcommand{\Sent}{\mbox{\sc s}}
+   \newcommand{\lookright}{\slash}
+   \newcommand{\lookleft}{\backslash}
+   \newcommand{\dettype}{(e \to t)\arrowminus ((e\to t)\arrowplus t)}
+\newcommand{\ntype}{e \to t}
+\newcommand{\etttype}{(e\to t)\arrowplus t}
+\newcommand{\nptype}{(e\to t)\arrowplus t}
+\newcommand{\verbtype}{TV}
+\newcommand{\who}{\infer{(\nptype)\arrowplus ((\ntype)\arrowplus (\ntype))}{\mbox{who}}}
+\newcommand{\iverbtype}{IV}
+\newcommand{\Nprop}{\N_{\mbox{prop}}}
+\newcommand{\VP}{{\mbox{\sc vp}}}
+\newcommand{\CN}{{\mbox{\sc cn}}}
+\newcommand{\Vintrans}{\mbox{\sc iv}}
+\newcommand{\Vtrans}{\mbox{\sc tv}}
+\newcommand{\Num}{\mbox{\sc num}}
+%\newcommand{\S}{\mathbb{A}}
+\newcommand{\Det}{\mbox{\sc det}}
+\newcommand{\preorderB}{\mathbb{B}}
+\newcommand{\simA}{\sim_A}
+\newcommand{\simB}{\sim_B}
+\newcommand{\polarizedtype}{\mbox{\sf poltype}}
+\newcommand{\card}{\mbox{card}}
+
+\begin{document}
+%\tableofcontents
+
+
+\section{The logic of {\sf All} and set unions}
+
+Here's the syntax.   We start with \emph{basic nouns} and from these we construct \emph{union terms}
+We
+use letters $x$, $y$, $z$, for basic nouns.  The union terms are terms $x\cup y$, where $x$ and $y$ are basic nouns.
+We use letters like $t$ for terms which are either basic nouns  or union terms.
+
+In the semantics, we interpret the basic noun $x$ by $\semantics{x}\subseteq M$, and then we always interpret a union term $x\cup y$ by 
+$\semantics{x}\cup\semantics{y}$.
+
+\begin{figure}[t]
+\begin{mathframe}
+\[
+\begin{array}{l@{\qquad}l@{\qquad}l}
+\infer{\mbox{\sf All $t$ $t$}}{}
+&
+\infer{\mbox{\sf All $t$ $v$}}{\mbox{\sf All $t$ $u$} & \mbox{\sf All $u$ $v$}}
+&
+\infer{\mbox{\sf All ($x\cup x$) $x$}}{}  \\  \\
+\infer{\mbox{\sf All $x$ ($x\cup y$) }}{} &
+\infer{\mbox{\sf All ($y \cup x$) ($x\cup y$) }}{} &
+\infer{\mbox{\sf All ($x\cup y$) $t$}}{\mbox{\sf All $x$ $t$} & \mbox{\sf All $y$ $t$}}
+\end{array}
+\]
+\caption{The logic of {\sf All} and set unions.\label{fig-all-unions}}
+\end{mathframe}
+\end{figure}
+
+For a fixed set $\Gamma$, we write $t\leq u$ to mean that $\Gamma\proves \mbox{\sf All $t$ $u$}$.
+(We do this to lighten the notation.)    We also write $x \equiv y$ to mean $x\leq y \leq x$.
+
+\begin{example}
+For any set $\Gamma$, if $x\leq y$ and $z\leq w$, then $x\cup z \leq y\cup w$.
+\label{ex-1}
+\end{example}
+
+\begin{example}
+For any set $\Gamma$, if $a\equiv x\cup y$, $b\equiv a\cup z$, 
+$c \equiv y \cup z$, and $d \equiv x \cup c$, then $b \equiv d$.
+\label{ex-2}
+\end{example}
+
+\begin{definition} 
+A set $S$ of terms is an \emph{up-set (for $\Gamma$)} if whenever $t\in S$ and $t\leq u$, then also $u\in S$.
+$S$ is \emph{prime} if whenever $x\cup y \in S$, then either $x\in S$ or $y\in S$.
+\end{definition}
+
+Note that the notion of an up-set is relative to a set $\Gamma$, but the notion of a prime set does not refer to any set at all.
+
+When $\Gamma$ is clear from the context, we just speak of a set $S$ being an up-set (without referencing $\Gamma$).
+
+\begin{example}
+If $\Model$ is any model, then for all $m\in M$, $S_m = \set{t : m \in \semantics{t}}$
+is   prime.  If $\Model\models\Gamma$, then $S_m$ is an up-set for $\Gamma$.
+\label{ex-3}
+\end{example}
+
+\begin{lemma}  Fix a set $\Gamma$.
+Let $t$ be any term, and assume that $t \not\leq y\cup z$.
+Then there is a prime up-set containing $t$ but not containing either $y$ or $z$.
+\label{lemma-zorn}
+\end{lemma}
+
+\begin{proof}
+
+Let $\SS$ be the family of sets $T$ which contains $t$, is closed upwards, and contains neither  $y$ or $z$.
+One such set in $\SS$ is $\uparrow t$.  Note first that $\uparrow t$ does not contain either $y$ or $z$.  (For if $t\leq y$, then since $y\leq y \cup z$, we would have a contradiction.)
+
+By Zorn's Lemma, let $S$ be a maximal element of $\SS$ with respect to inclusion.
+We claim that 
+$S$ is  prime.   To see this, suppose that $a \cup b\in S$.  Suppose towards a contradiction that neither $a$ nor $b$ were in $S$.
+By maximality, $S\cup\uparrow a$ and $S\cup\uparrow b$  would not belong to $\SS$. 
+So they each contain $y$ or $z$.   Without loss of generality, $a\leq y$ and $b\leq z$.  
+By Example~\ref{ex-1},  $a\cup b \leq y\cup z$.   Since $S$ is an up-set, $y\cup z$ belongs to $S$.    And this is a contradiction.
+\end{proof}
+
+\begin{theorem}[Completeness]
+The logic of {\sf all} and unions in Figure~\ref{fig-all-unions} is complete.
+\label{theorem-first-completeness-union}
+\end{theorem}
+
+\begin{proof}
+We need to show that if $\Gamma\models \mbox{\sf All $t$ $u$}$,
+$\Gamma\proves \mbox{\sf All $t$ $u$}$.
+We may assume that $u$ is a union term.  (If $u$ were a basic noun $x$, replace $x$ with $x\cup x$.)
+We also may assume that $t$ is a basic noun.   Here is the reason.   Suppose that our original assumption were
+$\Gamma\models \mbox{\sf All ($x\cup y$) $u$}$.   It follows that both $\Gamma\models \mbox{\sf All $x$ $u$}$
+and $\Gamma\models \mbox{\sf All $y$ $u$}$.   If we were to prove that $x \leq u$ and $y\leq u$, then by the logic,
+we would have our desired conclusion:
+$x\cup y \leq y$.
+
+Thus, we reduce to showing that if  $\Gamma\models x\leq y \cup z$, then also  $\Gamma \proves x\leq y \cup z$.
+We show the contrapositive.   Assume
+ that $\Gamma\not\proves x\leq y \cup z$.   We shall find a model of $\Gamma$ where
+$ \semantics{x} \not\subseteq (\semantics{y}\cup\semantics{z})$.
+By Lemma~\ref{lemma-zorn}, let $S$ be a prime up-set containing $x$ but not containing either $y$ or $z$.
+
+We use $S$ to make a model $\Model$ with one point, say $*$.   We put $*\in \semantics{u}$ iff $u\in S$.
+Let us check that $\Model\models \Gamma$.  
+Suppose that $\Gamma$ contains the sentence {\sf All $ a$ $(b\cup c)$.}    We may assume that $\semantics{a} = \set{*}$, 
+since otherwise $\semantics{a} = \emptyset$, and trivially $\semantics{a}\subseteq \semantics{b}\cup\semantics{c}$.
+So $a \in S$.  As $S$ is closed upwards and $a\leq b\cup c$, $b\cup c\in S$ also.   Since $S$ is prime, either $b\in S$ or $c\in S$.
+So either $*\in\semantics{b}$ or $*\in \semantics{c}$.  Either way, $\semantics{b}\cup\semantics{c} = \set{*}$.  And again we have 
+$\semantics{a}\subseteq \semantics{b}\cup\semantics{c}$.
+Thus, $\Model\models \Gamma$.  
+
+By the defining property of $S$, $*\in \semantics{x} \setminus (\semantics{y}\cup\semantics{z})$ in our model.   Thus, 
+$ \semantics{x} \not\subseteq (\semantics{y}\cup\semantics{z})$.
+So we are done.
+\end{proof}
+
+\subsection{Constructing models from prime up-sets}
+
+Here is a more general result than what we saw in Theorem~\ref{theorem-first-completeness-union}.
+
+\begin{lemma} 
+Fix $\Gamma$.
+Let $M$ be any set, and suppose that for each $m\in M$ we have a prime up-set of terms $T_m$. 
+Equip $M$ with the structure of a model by  interpreting 
+basic nouns on $M$ thus:
+ \[
+ \semantics{x} = \set{m\in M : x \in T_m }.
+ \]
+ Then $\Model\models\Gamma$.   Moreover, for all terms $t$, 
+  \begin{equation}
+  \semantics{t} = \set{m\in M : t \in T_m }.
+  \label{mono}
+    \end{equation}
+ \end{lemma}
+ 
+ \begin{proof}
+Since each $T_m$ is prime, 
+ \[
+ \semantics{x\cup y} =  \set{m\in M : x \in T_m }\cup\set{m\in M : y \in T_m } = \set{m\in M : x\cup y  \in T_m }.
+ \]
+ (\ref{mono}) follows, for all terms $t$.
+ We are left with the verification that $\Model\models\Gamma$.
+ Suppose that $\Gamma$ contains the sentence {\sf All $u$ $t$}.  
+ Then $u \leq t$.
+ Let $m\in \semantics{u}$, so by (\ref{mono}), $u\in T_m$.
+ Since $T_m$ is an up-set, $t\in T_m$.    By (\ref{mono}) again, $m\in \semantics{t}$.  This shows that 
+$\semantics{u} \subseteq \semantics{t}$; that is, our sentence  {\sf All $u$ $t$}  is true in $\Model$. 
+ \end{proof}
+ 
+ Another fact worth knowing: the union of two prime up-sets is again a prime up-set.
+ 
+
+ \section{Adding {\sf Some $t$ $u$}}
+ 
+ \section{Adding {\sf More $t$ $u$} and $\existsgeq(x,y)$}
+ 
+ 
+ \begin{figure}[t]
+\begin{mathframe}
+ \[
+ \infer{\mbox{\sf Some} (a, c)}{\mbox{\sf More}(a,b) & \mbox{\sf AtLeast}(c,d) & \mbox{\sf{AtLeast}}(b \cup d, a \cup c)}
+\] 
+ 
+ 
+\caption{The Friday rule.\label{fig-friday}}
+\end{mathframe}
+\end{figure}
+ 
+
+\vfil\eject
+ \section{A lemma on strict orders}
+ 
+Let $I = \set{1,\ldots, n}$, and write $J$ for the set of unordered pairs from $I$.
+$J$ consists of all sets $\set{i,j}$ with $i\neq j$ taken from $I$.  If $\set{i,j} \neq \set{k,\ell}$ in $J$,
+then either $i \notin \set{k,\ell}$ or $j\notin \set{k,\ell}$;  and also either
+$k\notin \set{i,j}$ or else $\ell\notin{i,j}$.
+
+\begin{definition}
+A \emph{family over $I$} is a 
+function $A$ whose domain is $I$ 
+and such that for each $x\in I$, $A_x$ is a  finite set.
+\end{definition}
+ 
+\begin{proposition}
+There is a family $A$  over $I$ such that whenever
+$\set{i,j} \neq \set{k,\ell} \in J$,  $ \card(A_i \cup A_j) \neq  \card(A_k \cup A_{\ell})$.
+ % \[  | \card(A_i \cup A_j)-  \card(A_k \cup A_{\ell}) \ | \geq 1  \]
+  \label{proposition-first}
+  \end{proposition}
+ 
+ \begin{proof}
+ Let $A_1 = \set{1}$,
+ $A_2 = \set{2,3}$, 
+  $A_3 = \set{4, 5, 6, 7}$, 
+  $\ldots$, 
+ %$A_3 = \set{7, \ldots, 14}$, 
+ $A_i = \set{2^{i-1}, \ldots, 2^{i} -1}$, $\ldots$.
+ Then $\card(A_i \cup A_j) = 2^{i-1} + 2^{j-1}$.  
+ Our result then follows from the uniqueness of binary representations of natural numbers.
+   \end{proof}
+   
+\rem{ Note that $A_1\cup A_3 = \set{1,2,3}$ and $A_2 \cup A_3 = \set{1,4,5,6,7}$, and $5 - 3 =2$.
+ In all other cases,   $ | \card(A_i \cup A_j)-  \card(A_k \cup A_{\ell}) \ | > 2 $.
+  }
+
+  
+   \begin{lemma}
+ Let $<$ be a strict linear order of $J$.  Then there is a family $A$ over $I$ such that
+whenever $\set{i,j} \neq \set{k,\ell} \in J$, 
+ \[ \set{i,j} < \set{k,\ell} 
+ \quadiff
+ |A_i \cup A_j | < |A_k \cup A_{\ell}|.
+ \]
+ \label{lemma-J}
+ \end{lemma}
+ 
+\begin{proof} 
+Fix a family   $A$ over $I$ as in Proposition~\ref{proposition-first}.
+Let $\prec$ be the linear order of $J$  defined by
+$\set{i,j} \prec \set{k,\ell} $  iff    $ \card(A_i \cup A_j) <  \card(A_k \cup A_{\ell})$.
+The statement of Proposition~\ref{proposition-first} implies that $\prec$ is
+a linear order.
+In general, $< $ and $\prec$ are different
+strict linear orders of $J$.
+By following the bubble sort algorithm, there is a sequence of strict linear orders of $J$,
+\[
+\begin{array}{cccccccc}
+\prec = <_0 ,
+& <_1 ,
+& <_2 ,
+& \cdots
+& <_s,
+& \cdots
+& <_r = < 
+\end{array}
+\]
+where $r \leq {n+1 \choose 2}$, and where each  $<_s$ and its successor $<_{s+1}$ differ by only a transposition
+of adjacent elements.
+That is, the two orders  $<_{s}$ and  $<_{s+1}$ are the same except that two elements of 
+$J$, say $\set{i,j}$ and $\set{k,\ell}$,  have the property that 
+\begin{equation}
+\label{ijkl}
+\begin{array}{l}
+\mbox{$\set{k,\ell}$ is the immediate successor of  $\set{i,j}$ in $<_s$, and  $ \set{k,\ell} <_{s+1} \set{i,j}$.}\\
+\mbox{Also, $\set{i,j}$ and $\set{k,\ell}$ are the only pair where $<_s$ and $<_{s+1}$ differ.}
+\end{array}
+\end{equation}
+We show by induction on $s = 0, \ldots, m$ that there is a family $A^s$ such that 
+for $\set{a,b} \neq \set{c,d}$ in $J$,
+\begin{equation}\label{lemmagoal}
+ \set{a,b} <_s \set{c,d} 
+ \quadiff
+\card(A^{s}_a \cup A^{s}_b ) < \card(A^{s}_c \cup A^{s}_{d}).
+ \end{equation}
+
+For $s= 0$, we take the family $A^{0}$ to be  the same family $A$ 
+that we fixed at the outset of this proof.  Our choice of $<_0$ as $\prec$ insures that (\ref{lemmagoal}) holds for $s =0$.
+
+Given the family $A^{s}$ for a fixed $s$, we want to define  the family $A^{s+1}$.
+To save on superscripts, we'll abbreviate $A^{s}$ by $A$.   And we'll define a new family $B$ and show that it satisfies the 
+statement of (\ref{lemmagoal}) for $s+1$ with $B$ replacing $A^{s+1}$.
+
+
+
+
+
+Fix $i^*$, $j^*$, $k^*$, and $\ell^*$ such that (\ref{ijkl}) holds.
+Let $\set{g^*,h^*}$ be the immediate predecessor of $\set{i^*,j^*}$ in $<_s$.
+At this point, we need to take a step to insure 
+that our family ${A}_x$ has the following extra property:
+
+\begin{equation}\label{lemmagoal2}
+    \card({A}_{i^*} \cup {A}_{j^*}) - \card({A}_{g^*} \cup {A}_{h^*})   \geq 2. 
+\end{equation}
+By (\ref{lemmagoal}) for $s$,   (\ref{lemmagoal2}) holds with the $2$ on the right replaced by $1$.
+If need be, take two copies of all the points in all the sets.  This
+change doubles the cardinalities of all our sets and all of their unions.
+So it preserves  (\ref{lemmagoal}), and it
+ will guarantee that (\ref{lemmagoal2}) holds.
+ 
+ 
+Let \begin{equation}\label{Meq}
+ M = \card({A}_{k^*} \cup {A}_{\ell^*}) - \card({A}_{i^*} \cup {A}_{j^*}).\end{equation}
+Note that $M > 0$, by (\ref{lemmagoal}).
+Take $M+ 1$ fresh points, say $p_1, \ldots, p_{M+1}$, and add them to every set other than 
+${A}_{k^*}$ and ${A}_{\ell^*}$.   
+In other words, for $x\in I$,
+\[
+B_{x} = \left\{
+\begin{array}{ll}
+{A}_x \cup \set{p_1, \ldots, p_{M+1}}  & \mbox{if $x \neq k^*$ and $x \neq \ell^*$} \\
+{A}_x   & \mbox{if $x = k^*$ or $x = \ell^*$} \\
+\end{array}
+\right.
+\]
+Let us check that (\ref{lemmagoal}) holds for $s+1$.
+For all $\set{a,b} \neq \set{k^*, \l^*}$,  either $a$ or $b$ (or both) is not in $\set{k^*, \l^*}$.  And so in this case
+the new points will belong to $B_{a} \cup B_b$.  So
+\begin{equation}\label{andso}
+ \card(B_a \cup  B_b)   = \card({A}_a \cup  {A}_b) + (M + 1) \end{equation}
+In the other case,  $\set{a,b} = \set{k^*, \l^*}$,   and $B_{k^*} \cup  B_{\ell^*}  = {A}_{k^*}  \cup  {A}_{\ell^*} $.  So
+ \begin{equation}\label{defh}
+ \card(B_{k^*} \cup  B_{\ell^*} )   = \card({A}_{k^*}  \cup  {A}_{\ell^*} )  \end{equation}
+Now take $\set{a,b}$ and $\set{c,d}$ in $J$.
+If neither $\set{a,b}$ nor $\set{c,d}$ is $\set{k^*,\ell^*}$, then 
+\[
+\begin{array}{cll}
+ & \set{a,b} <_{s+1} \set{c,d} \\
+ \mbox{iff} &  \set{a,b} <_{s} \set{c,d} & \mbox{by (\ref{ijkl})}\\
+  \mbox{iff} & \card({A}_i \cup {A}_j ) < \card({A}_k \cup {A}_{\ell}) &\mbox{by  (\ref{lemmagoal}) for $s$} \\
+  \mbox{iff} & \card({A}_i \cup {A}_j ) + (M+1)  < \card({A}_k \cup {A}_{\ell})  + (M+1) \\ 
+ \mbox{iff} & \card(B_i \cup B_j )  < \card(B_k \cup B_{\ell}) &\mbox{by (\ref{andso})}    \\ 
+\end{array}
+\]
+From now on in the  verification of (\ref{lemmagoal}), we assume that $\set{c,d}$ is $\set{k^*,\ell^*}$.
+As for $\set{a,b}$, we have three alternatives:
+ $\set{a,b}= \set{i^*,j^*}$, or $\set{a,b} <_s  \set{i^*,j^*}$, or $ \set{k^*,\ell^*} <  \set{a,b}$.
+In the first case,   $\set{k^*,\ell^*} <_{s+1} \set{i^*,j^*}$.   And as desired:
+\[
+\begin{array}{cll}
+& \card(B_{k^*} \cup  B_{\ell^*})\\
+=  &  \card({A}_{k^*} \cup  {A}_{\ell^*})  &\mbox{by (\ref{defh})}\\
+ <  & \card({A}_{i^*} \cup  {A}_{j^*}) 
++ (M+1) &\mbox{by (\ref{Meq})} \\
+=  & \card(B_{i^*} \cup  B_{j^*}) 
+&\mbox{by (\ref{andso})}
+\\
+\end{array}
+\]
+
+\rem{
+
+%%%%
+  & \card(B_{i^*} \cup  B_{j^*})\\
+ =  & \card({A}_{i^*} \cup  {A}_{j^*}) 
++ (M+1) \\
+> &  \card({A}_{k^*} \cup  {A}_{\ell^*}) \\
+ = & \card(B_{k^*} \cup  B_{\ell^*})
+ }
+If $\set{a,b} <_s \set{i^*, j^*}$, then also $\set{a,b} <_{s+1} \set{k^*, \ell^*}$,
+since $<_s$ and $<_{s+1}$ only differ on their ordering of $\set{i^*, j^*}$ and $\set{k^*, \ell^*}$.
+%And in this case, we also have
+%\begin{equation}\label{alsohave}
+%   \card({A}_{i^*} \cup  {A}_{j^*}) -  \card({A}_{a} \cup  {A}_{b}) \geq 2 \end{equation}
+We have the desired result:
+\[
+\begin{array}{cll}
+  & \card(B_{a} \cup  B_{b})\\
+  = & \card({A}_{a} \cup  {A}_{b}) + (M+1) &\mbox{by (\ref{andso})} \\
+\leq
+ & \card({A}_{g^*} \cup  {A}_{h^*}) + (M+1) & \mbox{since $\set{a,b} \leq_s \set{g^*,h^*}$} \\
+ \leq &  \card({A}_{i^*} \cup  {A}_{j^*}) + (M+1) -2   & \mbox{by (\ref{lemmagoal2})} \\
+<  &  \card({A}_{i^*} \cup  {A}_{j^*}) + M & \\
+ =   & \card(B_{k^*} \cup  B_{\ell^*}) &  \mbox{by (\ref{Meq})}\\  
+\end{array}
+\]  
+  
+Concluding the verification of (\ref{lemmagoal}) for $s+1$,
+ if  $\set{k^*, \ell^*} <_s \set{a,b}$, then  as before  we have $\set{k^*, \ell^*} <_{s+1} \set{a,b}$.
+And also 
+\[
+\begin{array}{cll}
+  & \card(B_{k^*} \cup  B_{\ell^*})\\
+ =  & \card({A}_{k^*} \cup  {A}_{\ell^*}) 
+   & \mbox{by (\ref{defh})}\\
+<  &  \card({A}_{a} \cup  {A}_{b})   & \mbox{by (\ref{lemmagoal}) for $s$}  \\
+<  &  \card({A}_{a} \cup  {A}_{b}) + (M+1)  & \mbox{since $M>0$}  \\
+= & \card(B_{a} \cup  B_{b}) & \mbox{by (\ref{andso})}\\
+\end{array}
+\]
+
+This completes the proof. \end{proof} 
+  
+  \end{document}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+\end{document}
